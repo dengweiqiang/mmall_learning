@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 @Aspect
 @Component
-public class UserPrivilegeManagement {
+public class UserSecurityManagement {
 
     @Autowired
     private IUserService iUserService;

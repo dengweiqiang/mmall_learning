@@ -2,6 +2,8 @@ package com.mmall.service;
 
 import com.mmall.common.ServerResponse;
 
+import java.util.List;
+
 /**
  * Created by dengweiqiang on 2020/1/3
  */
@@ -34,5 +36,5 @@ public interface ICategoryService {
      * @param categoryId
      * @return
      */
-    ServerResponse selectCategoryAndChildrenById(Integer categoryId);
+    ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId);
 }

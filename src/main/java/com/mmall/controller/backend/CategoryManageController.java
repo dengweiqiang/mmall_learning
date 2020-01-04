@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by dengweiqiang on 2020/1/3
@@ -57,8 +58,8 @@ public class CategoryManageController {
 
     @RequestMapping(value = "get_deep_category.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession session,
-                                                             @RequestParam(value = "categoryId", defaultValue = "0")Integer categoryId) {
+    public ServerResponse<List<Integer>> getCategoryAndDeepChildrenCategory(HttpSession session,
+                                                                            @RequestParam(value = "categoryId", defaultValue = "0")Integer categoryId) {
 
         // 查询当前节点的id和递归子节点的id
         // 0 -> 10 -> 100
