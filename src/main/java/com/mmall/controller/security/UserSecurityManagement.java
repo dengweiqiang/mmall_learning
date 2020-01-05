@@ -5,6 +5,7 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
+import com.mmall.vo.CartVo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -27,6 +28,9 @@ public class UserSecurityManagement {
     @Pointcut("execution(public com.mmall.common.ServerResponse com.mmall.controller.backend.*.*(javax.servlet.http.HttpSession, ..))")
     private void adminPrivilege() {}
 
+    @Pointcut("execution(public com.mmall.common.ServerResponse com.mmall.controller.portal.CartController.*(javax.servlet.http.HttpSession, ..))")
+    private void portalPrivilege() {}
+
     /**
      * 对后台管理的方法进行权限的校验，避免冗余代码
      * @param joinPoint
@@ -47,6 +51,25 @@ public class UserSecurityManagement {
         } else {
             return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
         }
+    }
+
+
+    /**
+     * 校验用户是否登录
+     * @param joinPoint
+     * @return
+     * @throws Throwable
+     */
+    @Around("portalPrivilege()")
+    public ServerResponse aroundPortalAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+        // 获取方法的第一个参数，约定为 HttpSession
+        HttpSession session = (HttpSession) joinPoint.getArgs()[0];
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGING.getCode(), ResponseCode.NEED_LOGING.getDesc());
+        }
+        // 执行目标方法
+        return (ServerResponse) joinPoint.proceed();
     }
 
 }

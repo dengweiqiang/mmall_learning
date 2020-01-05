@@ -26,6 +26,11 @@ public class MmallBeanUtils {
         return target;
     }
 
+    public static <E, T> T beanMapper(E source, T target, String... ignoreProperties) {
+        BeanUtils.copyProperties(source, target, ignoreProperties);
+        return target;
+    }
+
 
     private static String[] getNullPropertyNames (Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
