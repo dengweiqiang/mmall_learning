@@ -28,7 +28,8 @@ public class UserSecurityManagement {
     @Pointcut("execution(public com.mmall.common.ServerResponse com.mmall.controller.backend.*.*(javax.servlet.http.HttpSession, ..))")
     private void adminPrivilege() {}
 
-    @Pointcut("execution(public com.mmall.common.ServerResponse com.mmall.controller.portal.CartController.*(javax.servlet.http.HttpSession, ..))")
+    @Pointcut("execution(public com.mmall.common.ServerResponse com.mmall.controller.portal.CartController.*(javax.servlet.http.HttpSession, ..))" +
+            "|| execution(public com.mmall.common.ServerResponse com.mmall.controller.portal.ShippingController.*(javax.servlet.http.HttpSession, ..))")
     private void portalPrivilege() {}
 
     /**
